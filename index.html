@@ -51,10 +51,8 @@
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
 
-    <!-- 遊戲主要容器 -->
     <div id="game-container" class="max-w-2xl w-full bg-white rounded-3xl shadow-xl overflow-hidden border-4 border-slate-700">
         
-        <!-- 頂部標題列 -->
         <div class="bg-red-600 text-white p-4 flex justify-between items-center border-b-4 border-slate-700 relative">
             <h1 class="text-xl md:text-2xl font-bold tracking-wider">寶可夢密碼破解器</h1>
             <div id="level-indicator" class="bg-white text-red-600 px-3 py-1 rounded-full font-bold text-sm hidden">
@@ -65,46 +63,38 @@
             </div>
         </div>
 
-        <!-- 教練對話框 -->
         <div class="p-6 bg-slate-50 border-b-2 border-slate-200">
             <div class="flex items-start gap-4">
                 <div class="text-4xl">👨‍🏫</div>
                 <div class="flex-1 flex flex-col gap-2">
                     <div class="bg-white p-4 rounded-2xl rounded-tl-none shadow-sm border border-slate-200 relative">
                         <p id="dialogue-text" class="text-lg md:text-xl text-slate-800 leading-relaxed">
-                            哈囉！準備好開始破解寶可夢的名字密碼了嗎？這次有更多關卡等著我們喔！
+                            哈囉！準備好開始破解寶可夢的名字密碼了嗎？這次有 10 個關卡等著我們喔！
                         </p>
                     </div>
                     
-                    <!-- 提示按鈕與提示內容區 (預設隱藏) -->
                     <div id="hint-container" class="hidden">
                         <button id="hint-btn" class="text-sm bg-yellow-100 hover:bg-yellow-200 text-yellow-800 font-bold py-1.5 px-3 rounded-full border border-yellow-300 transition-colors flex items-center gap-1">
                             💡 看不懂嗎？點我看實體表提示
                         </button>
                         <div id="hint-text-box" class="hidden mt-2 bg-yellow-50 border border-yellow-200 text-yellow-800 p-3 rounded-xl text-sm md:text-base leading-relaxed">
-                            <!-- 提示文字會在這裡顯示 -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 遊戲互動區 -->
         <div id="interactive-area" class="p-6 text-center min-h-[300px] flex flex-col justify-center items-center">
             <button id="start-btn" class="bg-blue-500 hover:bg-blue-600 text-white text-xl font-bold py-4 px-8 rounded-full card-pop border-b-4 border-blue-700 active:border-b-0 active:mt-4 transition-all">
                 進入訓練家模式！
             </button>
             
-            <!-- 選項網格 (預設隱藏) -->
             <div id="options-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full hidden">
-                <!-- 卡片由 JS 動態生成 -->
             </div>
 
-            <!-- 結果展示區 (預設隱藏) -->
             <div id="result-area" class="hidden flex flex-col items-center">
                 <img id="pokemon-image" src="" alt="寶可夢" class="w-48 h-48 object-contain drop-shadow-lg mb-4">
                 <div class="flex flex-wrap justify-center gap-2 mb-4" id="collected-letters">
-                    <!-- 收集到的字母 -->
                 </div>
                 <button id="next-btn" class="mt-4 bg-green-500 hover:bg-green-600 text-white text-lg font-bold py-3 px-6 rounded-full card-pop border-b-4 border-green-700 hidden">
                     下一個字
@@ -118,40 +108,15 @@
     </div>
 
     <script>
-        // 將遊戲資料改為多個關卡的陣列
         const levels = [
             {
                 pokemonName: "路卡利歐",
                 pokemonId: 448, 
                 steps: [
-                    {
-                        dialogue: "第一關！路卡利歐。請找出發音是「Ru」的字！",
-                        target: "ル",
-                        romanji: "Ru",
-                        options: ["ア", "ル", "サ", "メ"],
-                        hint: "找找看左邊數來第二行，白色的神獸「洛奇亞」，牠格子右下角的字就是答案囉！"
-                    },
-                    {
-                        dialogue: "太厲害了！接下來第二個字發音是「Ka」，找找看！",
-                        target: "カ",
-                        romanji: "Ka",
-                        options: ["ナ", "オ", "カ", "キ"],
-                        hint: "在實體表上找第一排右邊數來第二個，藍色的「水箭龜」！格子右下角長得很像中文「力」加一點的字。"
-                    },
-                    {
-                        dialogue: "找到了！第三個字發音是「Ri」，交給你了！",
-                        target: "リ",
-                        romanji: "Ri",
-                        options: ["リ", "ソ", "ン", "ツ"],
-                        hint: "找找看左邊數來第二行，橘色的「噴火龍」！牠格子右下角那個長得像兩根直直小棍子的字就是了。"
-                    },
-                    {
-                        dialogue: "路卡利歐的最後一個字！發音是「O」！",
-                        target: "オ",
-                        romanji: "O",
-                        options: ["木", "オ", "ネ", "ホ"],
-                        hint: "看實體表的最右下角，有一隻看起來很生氣的「火爆猴」，牠旁邊方方的字就是了！"
-                    }
+                    { dialogue: "第一關！路卡利歐。請找出發音是「Ru」的字！", target: "ル", romanji: "Ru", options: ["ア", "ル", "サ", "メ"], hint: "找找看左邊數來第二行，白色的神獸「洛奇亞」，牠格子右下角的字就是答案囉！" },
+                    { dialogue: "太厲害了！接下來第二個字發音是「Ka」，找找看！", target: "カ", romanji: "Ka", options: ["ナ", "オ", "カ", "キ"], hint: "在實體表上找第一排右邊數來第二個，藍色的「水箭龜」！格子右下角長得很像中文「力」加一點的字。" },
+                    { dialogue: "找到了！第三個字發音是「Ri」，交給你了！", target: "リ", romanji: "Ri", options: ["リ", "ソ", "ン", "ツ"], hint: "找找看左邊數來第二行，橘色的「噴火龍」！牠格子右下角那個長得像兩根直直小棍子的字就是了。" },
+                    { dialogue: "路卡利歐的最後一個字！發音是「O」！", target: "オ", romanji: "O", options: ["木", "オ", "ネ", "ホ"], hint: "看實體表的最右下角，有一隻看起來很生氣的「火爆猴」，牠旁邊方方的字就是了！" }
                 ],
                 bonusDialogue: "太強了！你成功拼出了「ルカリオ」。那你知道牠進化前叫做「利歐路」(Ri-O-Ru) 嗎？你看，剛好就是這幾個字重新組合耶！"
             },
@@ -159,78 +124,103 @@
                 pokemonName: "卡比獸",
                 pokemonId: 143, 
                 steps: [
-                    {
-                        dialogue: "第二關是愛睡覺的卡比獸！日文發音是 Ka-Bi-Go-N。第一個字是剛剛學過的「Ka」，還記得嗎？",
-                        target: "カ",
-                        romanji: "Ka",
-                        options: ["カ", "ウ", "ミ", "ラ"],
-                        hint: "忘記的話，再看一次第一排的「水箭龜」喔！"
-                    },
-                    {
-                        dialogue: "第二個字是「Bi」。日文很有趣，只要在「Hi」這個字的右上角加上兩點，就會變成 Bi 喔！找找看加上兩點的字。",
-                        target: "ビ",
-                        romanji: "Bi",
-                        options: ["ピ", "ビ", "ヒ", "ニ"],
-                        hint: "先在表上找「小火龍」(第二排中間)。牠旁邊的字是 Hi，加上兩點就是你要找的 Bi 囉！"
-                    },
-                    {
-                        dialogue: "第三個字是「Go」。一樣的道理，找到「Ko」加上兩點，就會發出 Go 的聲音！",
-                        target: "ゴ",
-                        romanji: "Go",
-                        options: ["コ", "ド", "ゴ", "ボ"],
-                        hint: "找找看最下面那一排，黃色的「可達鴨」(右邊數來第二個)。把那個字加上兩點就對了！"
-                    },
-                    {
-                        dialogue: "最後一個音是閉著嘴巴發出的鼻音「N」！這是一個很特別的字喔。",
-                        target: "ン",
-                        romanji: "N",
-                        options: ["ソ", "シ", "ン", "ツ"],
-                        hint: "這個字超好找，就在整張五十音表的最左上角，卡比獸自己的格子裡！"
-                    }
+                    { dialogue: "第二關是愛睡覺的卡比獸！發音是 Ka-Bi-Go-N。第一個字是學過的「Ka」，還記得嗎？", target: "カ", romanji: "Ka", options: ["カ", "ウ", "ミ", "ラ"], hint: "忘記的話，再看一次第一排的「水箭龜」喔！" },
+                    { dialogue: "第二個字是「Bi」。在「Hi」這個字的右上角加上兩點，就會變成 Bi 喔！找加上兩點的字。", target: "ビ", romanji: "Bi", options: ["ピ", "ビ", "ヒ", "ニ"], hint: "先在表上找「小火龍」(第二排中間)。牠旁邊的字是 Hi，加上兩點就是你要找的 Bi 囉！" },
+                    { dialogue: "第三個字是「Go」。一樣的道理，找到「Ko」加上兩點，就會發出 Go 的聲音！", target: "ゴ", romanji: "Go", options: ["コ", "ド", "ゴ", "ボ"], hint: "找找看最下面那一排，黃色的「可達鴨」(右邊數來第二個)。把那個字加上兩點就對了！" },
+                    { dialogue: "最後一個音是閉著嘴巴發出的鼻音「N」！這是一個很特別的字喔。", target: "ン", romanji: "N", options: ["ソ", "シ", "ン", "ツ"], hint: "這個字超好找，就在整張五十音表的最左上角，卡比獸自己的格子裡！" }
                 ],
-                bonusDialogue: "漂亮！你成功收服了卡比獸（カビゴン）！你也順便學會了日文加上兩點就會變音的魔法（濁音）！"
+                bonusDialogue: "漂亮！你成功收服了卡比獸！也順便學會了日文加上兩點就會變音的魔法（濁音）！"
             },
             {
                 pokemonName: "皮卡丘",
                 pokemonId: 25, 
                 steps: [
-                    {
-                        dialogue: "第三關！全世界最有名的皮卡丘！發音是 Pi-Ka-Chu-U。第一個字「Pi」，是在「Hi」的右上角加上一個『小圈圈』喔！",
-                        target: "ピ",
-                        romanji: "Pi",
-                        options: ["ビ", "ピ", "ヒ", "パ"],
-                        hint: "一樣先看「小火龍」(第二排中間)。把那個字加上一個小圈圈，就會發出 Pi 的聲音！"
-                    },
-                    {
-                        dialogue: "又出現了！第二個字是皮卡丘的「Ka」，你已經找過第三次了對吧！",
-                        target: "カ",
-                        romanji: "Ka",
-                        options: ["力", "カ", "ク", "ケ"],
-                        hint: "水箭龜的格子！你一定已經背起來了。"
-                    },
-                    {
-                        dialogue: "皮卡丘的「Chu」其實是把兩個字拼在一起！我們先找第一個字「Chi」。",
-                        target: "チ",
-                        romanji: "Chi",
-                        options: ["テ", "チ", "ナ", "ト"],
-                        hint: "找找看第四排右邊數來第二個，頭上長著一片大葉子的「菊草葉」，就是這個字！"
-                    },
-                    {
-                        dialogue: "再來我們要找縮小版的「Yu」！在日文裡，把 Yu 寫得很小放在 Chi 旁邊，就會唸成 Chu 喔！",
-                        target: "ュ",
-                        romanji: "yu (小字)",
-                        options: ["ユ", "ヨ", "ュ", "ョ"],
-                        hint: "先找一般大小的 Yu！在倒數第二排中間，戴著斗笠的「雪童子」。然後選一個長得一模一樣但縮小的字！"
-                    },
-                    {
-                        dialogue: "最後一個字是拉長音的「U」！找找看！",
-                        target: "ウ",
-                        romanji: "U",
-                        options: ["ワ", "ウ", "ラ", "フ"],
-                        hint: "在最右邊數來第三排最上面，看起來很威風的「風速狗」，牠格子裡的字就是 U！"
-                    }
+                    { dialogue: "第三關！全世界最有名的皮卡丘！發音是 Pi-Ka-Chu-U。第一個字「Pi」，是在「Hi」的右上角加上一個『小圈圈』喔！", target: "ピ", romanji: "Pi", options: ["ビ", "ピ", "ヒ", "パ"], hint: "一樣先看「小火龍」(第二排中間)。把那個字加上一個小圈圈，就會發出 Pi 的聲音！" },
+                    { dialogue: "又出現了！第二個字是皮卡丘的「Ka」，你已經找過第三次了對吧！", target: "カ", romanji: "Ka", options: ["力", "カ", "ク", "ケ"], hint: "水箭龜的格子！你一定已經背起來了。" },
+                    { dialogue: "皮卡丘的「Chu」其實是把兩個字拼在一起！我們先找第一個字「Chi」。", target: "チ", romanji: "Chi", options: ["テ", "チ", "ナ", "ト"], hint: "找找看第四排右邊數來第二個，頭上長著一片大葉子的「菊草葉」，就是這個字！" },
+                    { dialogue: "再來找縮小版的「Yu」！在日文裡，把 Yu 寫得很小放在 Chi 旁邊，就會唸成 Chu 喔！", target: "ュ", romanji: "yu(小字)", options: ["ユ", "ヨ", "ュ", "ョ"], hint: "先找一般大小的 Yu！在倒數第二排中間，戴著斗笠的「雪童子」。然後選一個長得一模一樣但縮小的字！" },
+                    { dialogue: "最後一個字是拉長音的「U」！找找看！", target: "ウ", romanji: "U", options: ["ワ", "ウ", "ラ", "フ"], hint: "在最右邊數來第三排最上面，看起來很威風的「風速狗」，牠格子裡的字就是 U！" }
                 ],
-                bonusDialogue: "太神啦！你連日文裡最難的「小字組合」（チュ）都學會了！現在你已經具備看懂寶可夢圖鑑的超強基礎了！"
+                bonusDialogue: "太神啦！連最難的「小字組合」（チュ）都學會了！你已經具備看懂寶可夢圖鑑的超強基礎了！"
+            },
+            {
+                pokemonName: "伊布",
+                pokemonId: 133,
+                steps: [
+                    { dialogue: "第四關是很受歡迎的伊布！日文發音是 I-I-Bu-I。第一個字「I」，找找看實體表上的伊布在哪裡？", target: "イ", romanji: "I", options: ["ア", "イ", "ウ", "エ"], hint: "就在最右邊那一行，從上面數下來第二個喔！" },
+                    { dialogue: "第二個是「長音符號」，看到它就要把前面的聲音拉長，唸成 I~~。", target: "ー", romanji: "(長音)", options: ["一", "ー", "ニ", "ン"], hint: "這是一條橫線，在寶可夢名字裡超級常見！找最像一條直線的那個。" },
+                    { dialogue: "第三個字是「Bu」。記得加兩點變音的魔法嗎？我們要找「Fu」加上兩點。", target: "ブ", romanji: "Bu", options: ["プ", "ブ", "フ", "ベ"], hint: "找找看背著綠色種子的「妙蛙種子」，把牠格子裡的字加上兩點就是了！" },
+                    { dialogue: "最後一個字也是「I」，伊布的開頭和結尾一模一樣喔！", target: "イ", romanji: "I", options: ["イ", "ト", "キ", "メ"], hint: "這題送分啦，選跟第一個字一樣的就對了。" }
+                ],
+                bonusDialogue: "太棒了！你學會了「長音符號」，以後看到橫線就知道要把聲音拉長囉！"
+            },
+            {
+                pokemonName: "耿鬼",
+                pokemonId: 94,
+                steps: [
+                    { dialogue: "第五關是喜歡惡作劇的耿鬼！發音是 Ge-N-Ga-A。第一個字是「Ge」。找找看「Ke」加上兩點！", target: "ゲ", romanji: "Ge", options: ["ケ", "ゲ", "ク", "グ"], hint: "提示就在耿鬼自己身上！找找右邊數來第二行，紫色的耿鬼，把那個字加上兩點。" },
+                    { dialogue: "第二個是鼻音「N」，卡比獸那關學過的，你一定記得！", target: "ン", romanji: "N", options: ["ソ", "ン", "シ", "ツ"], hint: "在五十音表的最左上角，卡比獸的格子！" },
+                    { dialogue: "第三個字是「Ga」。是水箭龜的「Ka」加上兩點！", target: "ガ", romanji: "Ga", options: ["カ", "ガ", "キ", "ギ"], hint: "第一排右邊數來第二個，藍色的水箭龜，把牠格子裡的字加上兩點！" },
+                    { dialogue: "最後又是長音符號！把聲音拉長。", target: "ー", romanji: "(長音)", options: ["ー", "一", "ソ", "ン"], hint: "就是那一條橫線，選它就對了。" }
+                ],
+                bonusDialogue: "恭喜通關！耿鬼的名字裡有兩個濁音，你都順利找出來了，超級厲害！"
+            },
+            {
+                pokemonName: "超夢",
+                pokemonId: 150,
+                steps: [
+                    { dialogue: "第六關是傳說中的寶可夢：超夢！發音是 Myu-U-Tsu-U。第一個字是「Mi」。", target: "ミ", romanji: "Mi", options: ["ミ", "シ", "三", "ン"], hint: "超夢在實體表上也有出現喔！找找中間偏上的位置，紫色的超夢。" },
+                    { dialogue: "第二個字是皮卡丘那關學過的「縮小版小字」！這次要找小字的「Yu」。", target: "ュ", romanji: "yu(小字)", options: ["ユ", "ュ", "ヨ", "ョ"], hint: "先找一般大小的 Yu！在戴斗笠的「雪童子」格子裡。然後選一個長得一樣但縮小的字！" },
+                    { dialogue: "第三個字是拉長音的「U」！之前在皮卡丘那裡找過一次。", target: "ウ", romanji: "U", options: ["ウ", "ワ", "ラ", "フ"], hint: "在最右邊數來第三排最上面，看起來很威風的「風速狗」，牠格子裡的字就是 U！" },
+                    { dialogue: "第四個字是「Tsu」。這個字長得有點像笑臉。", target: "ツ", romanji: "Tsu", options: ["ツ", "シ", "ソ", "ン"], hint: "找找右邊數來第四行中間，綠色殼的「壺壺」，牠格子裡的字就是了。" },
+                    { dialogue: "最後又是長音符號！把聲音拉長。", target: "ー", romanji: "(長音)", options: ["ー", "一", "ソ", "ン"], hint: "這條橫線你已經很熟了對吧！" }
+                ],
+                bonusDialogue: "太神啦！連超夢這麼複雜的名字都被你破解了！"
+            },
+            {
+                pokemonName: "噴火龍",
+                pokemonId: 6,
+                steps: [
+                    { dialogue: "第七關，超人氣的噴火龍！發音是 Ri-Za-A-Do-N。第一個字「Ri」，路卡利歐那關找過囉！", target: "リ", romanji: "Ri", options: ["リ", "ソ", "ン", "ツ"], hint: "忘了嗎？提示就在實體表上的噴火龍身上喔！左邊數來第二行橘色的那隻。" },
+                    { dialogue: "第二個字是「Za」。找出「Sa」加上兩點！", target: "ザ", romanji: "Za", options: ["サ", "ザ", "ジ", "ゼ"], hint: "找找看最右上角那區，黃色的神獸「閃電鳥」，把牠格子的字加上兩點。" },
+                    { dialogue: "第三個是大家都很熟的長音符號！", target: "ー", romanji: "(長音)", options: ["一", "ー", "ニ", "ン"], hint: "直接選那條橫線吧！" },
+                    { dialogue: "第四個字是「Do」。找出「To」加上兩點！", target: "ド", romanji: "Do", options: ["ト", "ド", "デ", "ダ"], hint: "找找實體表下半部中間，還在蛋殼裡的「波克比」，把牠格子的字加上兩點。" },
+                    { dialogue: "最後一個音，鼻音「N」！", target: "ン", romanji: "N", options: ["ソ", "シ", "ン", "ツ"], hint: "卡比獸格子裡的那個字！" }
+                ],
+                bonusDialogue: "噴火龍收服成功！這關有很多加上兩點的濁音，看來你已經完全掌握變音的規則了！"
+            },
+            {
+                pokemonName: "甲賀忍蛙",
+                pokemonId: 658,
+                steps: [
+                    { dialogue: "第八關，超帥的甲賀忍蛙！發音是 Ge-(停頓)-Ko-U-Ga。第一個字「Ge」，在耿鬼那關找過了！", target: "ゲ", romanji: "Ge", options: ["ケ", "ゲ", "ク", "グ"], hint: "找右邊數來第二行，紫色的耿鬼，把那個字加上兩點。" },
+                    { dialogue: "第二個是個新魔法！縮小版的「Tsu」。它不發音，而是要『停頓一下』再接後面的字喔！", target: "ッ", romanji: "(促音)", options: ["ツ", "ッ", "シ", "ン"], hint: "找找綠色殼的「壺壺」，然後選一個長得一模一樣但是縮小的版本！這叫做促音。" },
+                    { dialogue: "第三個字是「Ko」。找找看！", target: "コ", romanji: "Ko", options: ["ユ", "コ", "ニ", "エ"], hint: "找最下面那一排，黃色的「可達鴨」。" },
+                    { dialogue: "第四個字是「U」。皮卡丘和超夢都有這個字！", target: "ウ", romanji: "U", options: ["ワ", "ウ", "ラ", "フ"], hint: "「風速狗」格子裡的字就是 U！" },
+                    { dialogue: "最後一個字是「Ga」。水箭龜的「Ka」加上兩點！", target: "ガ", romanji: "Ga", options: ["カ", "ガ", "キ", "ギ"], hint: "水箭龜格子裡的字加上兩點喔。" }
+                ],
+                bonusDialogue: "漂亮！你學會了縮小版的『ッ』(促音)，知道看到它就要停頓一下。忍蛙的發音唸起來是不是很有節奏感？"
+            },
+            {
+                pokemonName: "胖丁",
+                pokemonId: 39,
+                steps: [
+                    { dialogue: "第九關是愛唱歌的胖丁！發音是 Pu-Ri-N。第一個字「Pu」，記得加小圈圈的魔法嗎？", target: "プ", romanji: "Pu", options: ["ブ", "プ", "フ", "パ"], hint: "找找看背著綠色種子的「妙蛙種子」，把牠格子裡的字加上一個小圈圈！" },
+                    { dialogue: "第二個字是「Ri」。噴火龍跟路卡利歐都有這個字喔。", target: "リ", romanji: "Ri", options: ["リ", "ソ", "ン", "ツ"], hint: "噴火龍格子裡的那個字！" },
+                    { dialogue: "最後一個又是鼻音「N」！", target: "ン", romanji: "N", options: ["ソ", "シ", "ン", "ツ"], hint: "卡比獸格子裡的那個老朋友！" }
+                ],
+                bonusDialogue: "輕鬆過關！這關是幫你複習加上小圈圈的半濁音，你表現得太棒了！準備迎接最後一關了嗎？"
+            },
+            {
+                pokemonName: "百變怪",
+                pokemonId: 132,
+                steps: [
+                    { dialogue: "最終關卡！可以變成任何寶可夢的百變怪！發音是 Me-Ta-Mo-N。第一個字「Me」！", target: "メ", romanji: "Me", options: ["メ", "ナ", "ヌ", "ネ"], hint: "提示就在百變怪自己身上！找找實體表下半部，紫色的那坨軟泥怪。" },
+                    { dialogue: "第二個字是「Ta」。", target: "タ", romanji: "Ta", options: ["タ", "ク", "ケ", "コ"], hint: "找找右上角那一區，藍色的海馬「墨海馬」。" },
+                    { dialogue: "第三個字是「Mo」。", target: "モ", romanji: "Mo", options: ["モ", "マ", "ミ", "ム"], hint: "找找最下面那一排，圓圓的貓頭鷹「木木梟」。" },
+                    { dialogue: "最後一個字，也是我們這堂課的最後一個密碼！大聲唸出來吧！", target: "ン", romanji: "N", options: ["ソ", "シ", "ン", "ツ"], hint: "卡比獸！就決定是你了！" }
+                ],
+                bonusDialogue: "🎉 狂賀！你完成了所有十關的測驗！雖然還沒有把所有字都背起來，但你已經學會了日文發音的「所有遊戲規則」！以後不管看到什麼寶可夢的名字，你都有能力自己解開密碼囉！畢業快樂！"
             }
         ];
 
@@ -238,7 +228,6 @@
         let currentStepIndex = -1;
         let collectedLetters = [];
 
-        // DOM 元素
         const dialogueText = document.getElementById('dialogue-text');
         const startBtn = document.getElementById('start-btn');
         const interactiveArea = document.getElementById('interactive-area');
@@ -253,9 +242,20 @@
         const hintTextBox = document.getElementById('hint-text-box');
         const levelIndicator = document.getElementById('level-indicator');
 
-        // 語音發聲函數
         function speak(text) {
             if ('speechSynthesis' in window) {
+                if (text === 'ー') {
+                    const utterance = new SpeechSynthesisUtterance('長音');
+                    utterance.lang = 'zh-TW';
+                    window.speechSynthesis.speak(utterance);
+                    return;
+                }
+                if (text === 'ッ') {
+                    const utterance = new SpeechSynthesisUtterance('停頓');
+                    utterance.lang = 'zh-TW';
+                    window.speechSynthesis.speak(utterance);
+                    return;
+                }
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'ja-JP';
                 utterance.rate = 0.8; 
@@ -263,7 +263,6 @@
             }
         }
 
-        // 打亂陣列順序
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -272,7 +271,6 @@
             return array;
         }
 
-        // 提示按鈕事件
         hintBtn.addEventListener('click', () => {
             const currentLevel = levels[currentLevelIndex];
             if (currentStepIndex >= 0 && currentStepIndex < currentLevel.steps.length) {
@@ -282,7 +280,6 @@
             }
         });
 
-        // 遊戲開始
         startBtn.addEventListener('click', () => {
             startBtn.classList.add('hidden');
             levelIndicator.classList.remove('hidden');
@@ -299,7 +296,6 @@
             resultArea.classList.remove('hidden');
             nextLevelBtn.classList.add('hidden');
             
-            // 顯示黑影寶可夢
             const currentLevel = levels[currentLevelIndex];
             pokemonImage.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${currentLevel.pokemonId}.png`; 
             pokemonImage.classList.add('brightness-0', 'opacity-50', 'w-32', 'h-32'); 
@@ -308,13 +304,11 @@
             nextStep();
         }
 
-        // 下一個步驟
         function nextStep() {
             currentStepIndex++;
             nextBtn.classList.add('hidden');
             optionsGrid.innerHTML = '';
             
-            // 隱藏並重置提示區塊
             hintContainer.classList.remove('hidden');
             hintTextBox.classList.add('hidden');
             hintTextBox.classList.remove('hint-slide-down');
@@ -340,12 +334,10 @@
             }
         }
 
-        // 處理選項點擊
         function handleOptionClick(btn, selected, target, romanji) {
             speak(selected); 
             
             if (selected === target) {
-                // 答對了
                 btn.classList.remove('border-slate-200', 'text-slate-700', 'hover:border-blue-400');
                 btn.classList.add('border-green-500', 'text-green-600', 'bg-green-50', 'correct-anim');
                 
@@ -363,7 +355,6 @@
                 }, 800);
 
             } else {
-                // 答錯了
                 btn.classList.add('shake', 'bg-red-50', 'border-red-300', 'text-red-500');
                 setTimeout(() => {
                     btn.classList.remove('shake', 'bg-red-50', 'border-red-300', 'text-red-500');
@@ -371,15 +362,14 @@
             }
         }
 
-        // 更新收集到的字母區
         function updateCollectedArea() {
             collectedLettersContainer.innerHTML = '';
             collectedLetters.forEach(item => {
                 const box = document.createElement('div');
                 box.className = 'bg-slate-800 text-white border-2 border-slate-600 rounded-lg p-3 text-center min-w-[4rem] correct-anim';
                 
-                // 處理小字在視覺上的呈現
-                const isSmallChar = item.char === 'ュ';
+                // 處理小字在視覺上的呈現 (包含促音 ッ)
+                const isSmallChar = item.char === 'ュ' || item.char === 'ッ';
                 const charClass = isSmallChar ? 'text-2xl mt-2' : 'text-3xl font-bold';
                 
                 box.innerHTML = `
@@ -390,29 +380,29 @@
             });
         }
 
-        // 顯示最終彩蛋與過關畫面
         function showBonus() {
             optionsGrid.classList.add('hidden');
             hintContainer.classList.add('hidden');
             
             const currentLevel = levels[currentLevelIndex];
             
-            // 寶可夢解鎖特效 (移除黑影)
             pokemonImage.classList.remove('brightness-0', 'opacity-50', 'w-32', 'h-32');
             pokemonImage.classList.add('w-48', 'h-48', 'brightness-100', 'opacity-100', 'correct-anim');
             
-            // 唸出完整名字 (處理小字的發音邏輯)
             let fullName = currentLevel.steps.map(s => s.target).join('');
             speak(fullName); 
 
             dialogueText.innerHTML = currentLevel.bonusDialogue;
             
-            // 判斷是否有下一關
             setTimeout(() => {
                 if (currentLevelIndex < levels.length - 1) {
                     nextLevelBtn.classList.remove('hidden');
                 } else {
-                    dialogueText.innerHTML += "<br><br>🎉 恭喜你！今天的第一堂課完美通關！你已經是個厲害的見習訓練家了！";
+                    // 10關全部破關的最終畫面
+                    let finalMessage = document.createElement('div');
+                    finalMessage.className = "mt-6 p-4 bg-yellow-100 border-2 border-yellow-400 rounded-xl text-yellow-800 font-bold text-lg correct-anim";
+                    finalMessage.innerHTML = "🏆 恭喜見習訓練家畢業！請找爸爸領取破關獎勵！";
+                    resultArea.appendChild(finalMessage);
                 }
             }, 1000);
         }
