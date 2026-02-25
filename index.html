@@ -62,7 +62,7 @@
                 <div class="flex-1 flex flex-col gap-2">
                     <div class="bg-white p-4 rounded-2xl rounded-tl-none shadow-sm border border-slate-200 relative">
                         <p id="dialogue-text" class="text-lg md:text-xl text-slate-800 leading-relaxed">
-                            歡迎回到訓練中心！今天你想進行哪一種特訓呢？
+                            歡迎回到訓練中心！題庫已經更新，今天你想挑戰哪一種特訓呢？
                         </p>
                     </div>
                     
@@ -79,7 +79,6 @@
 
         <div id="interactive-area" class="p-6 text-center min-h-[300px] flex flex-col justify-center items-center">
             
-            <!-- 首頁模式選擇 -->
             <div id="mode-selection" class="flex flex-col md:flex-row gap-6 w-full max-w-md">
                 <button onclick="selectMode('name')" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white text-xl font-bold py-6 px-4 rounded-2xl card-pop border-b-4 border-blue-700">
                     <div class="text-3xl mb-2">🔍</div>
@@ -97,7 +96,6 @@
             </div>
 
             <div id="result-area" class="hidden flex flex-col items-center w-full">
-                <!-- 屬性模式特有的展示區 -->
                 <div id="type-badge" class="hidden text-3xl font-bold text-white px-6 py-2 rounded-full mb-4 correct-anim"></div>
                 
                 <img id="pokemon-image" src="" alt="寶可夢" class="w-48 h-48 object-contain drop-shadow-lg mb-4">
@@ -115,55 +113,93 @@
     </div>
 
     <script>
-        // 名字模式的關卡 (精簡版，可自行把之前的加回來)
+        // 名字模式擴充：直接從使用者提供的五十音表上選角
         const nameLevels = [
             {
                 pokemonName: "路卡利歐", pokemonId: 448, 
                 steps: [
-                    { dialogue: "名字特訓開始！找出路卡利歐的第一個字「Ru」！", target: "ル", romanji: "Ru", options: ["ア", "ル", "サ", "メ"], hint: "左邊數來第二行，神獸洛奇亞格子右下角的片假名。" },
+                    { dialogue: "先來暖個身！找出路卡利歐的第一個字「Ru」！", target: "ル", romanji: "Ru", options: ["ア", "ル", "サ", "メ"], hint: "左邊數來第二行，神獸洛奇亞格子右下角的片假名。" },
                     { dialogue: "第二個字是「Ka」，找找看！", target: "カ", romanji: "Ka", options: ["ナ", "オ", "カ", "キ"], hint: "第一排右邊數來第二個，水箭龜格子右下角的字。" },
                     { dialogue: "第三個字是「Ri」！", target: "リ", romanji: "Ri", options: ["リ", "ソ", "ン", "ツ"], hint: "左邊數來第二行，噴火龍格子右下角。" },
                     { dialogue: "最後一個字！發音是「O」！", target: "オ", romanji: "O", options: ["木", "オ", "ネ", "ホ"], hint: "最右下角，火爆猴旁邊方方的字！" }
                 ],
-                bonusDialogue: "片假名解碼成功！這就是路卡利歐的名字寫法。"
+                bonusDialogue: "漂亮！路卡利歐的名字你已經很熟練了。"
+            },
+            {
+                pokemonName: "拉普拉斯", pokemonId: 131, 
+                steps: [
+                    { dialogue: "新挑戰！乘龍(拉普拉斯)就在你的實體表上！發音是 Ra-Pu-Ra-Su。先找「Ra」！", target: "ラ", romanji: "Ra", options: ["ラ", "ウ", "ス", "ヤ"], hint: "超簡單，直接看最上面那一排左邊數來第三個，拉普拉斯自己格子右下角的字！" },
+                    { dialogue: "第二個字是「Pu」。要找加小圈圈的魔法喔！", target: "プ", romanji: "Pu", options: ["ブ", "プ", "フ", "パ"], hint: "先找到妙蛙種子(第三排中間)，把牠格子右下角的字加上小圈圈！" },
+                    { dialogue: "第三個字又是「Ra」，這題送分！", target: "ラ", romanji: "Ra", options: ["マ", "ラ", "ケ", "ナ"], hint: "跟第一個字一模一樣喔。" },
+                    { dialogue: "最後一個字是「Su」！", target: "ス", romanji: "Su", options: ["ヌ", "ス", "マ", "ム"], hint: "找找右邊數來第四行，神獸水君(藍色的)，牠格子右下角的字。" }
+                ],
+                bonusDialogue: "太棒了！拉普拉斯(乘龍)解碼成功！"
+            },
+            {
+                pokemonName: "呆呆獸", pokemonId: 79, 
+                steps: [
+                    { dialogue: "這隻也印在你的表上喔！呆呆獸發音是 Ya-Do-N。先找「Ya」！", target: "ヤ", romanji: "Ya", options: ["ヤ", "セ", "マ", "ラ"], hint: "看最上面那一排，左邊數來第四個，呆呆獸自己格子右下角的字！" },
+                    { dialogue: "第二個字是「Do」，這是一個濁音(加兩點)。", target: "ド", romanji: "Do", options: ["ト", "ド", "デ", "ダ"], hint: "找實體表下半部中間，還在蛋殼裡的波克比，把那格的字加上兩點。" },
+                    { dialogue: "最後是閉嘴巴的鼻音「N」，我們的老朋友了。", target: "ン", romanji: "N", options: ["ソ", "シ", "ン", "ツ"], hint: "最左上角，卡比獸格子裡的那個字！" }
+                ],
+                bonusDialogue: "解碼成功！呆呆獸(ヤドン)的名字是不是很可愛？"
+            },
+            {
+                pokemonName: "閃電鳥", pokemonId: 145, 
+                steps: [
+                    { dialogue: "傳說中的神獸閃電鳥！發音是 Sa-N-Da-A(長音)。先找「Sa」！", target: "サ", romanji: "Sa", options: ["サ", "キ", "マ", "ヤ"], hint: "看最上面那一排右邊數來第三個，閃電鳥自己格子右下角的字！" },
+                    { dialogue: "第二個又是鼻音「N」！", target: "ン", romanji: "N", options: ["ン", "シ", "ソ", "ツ"], hint: "卡比獸的格子！你一定閉著眼睛都能找到了。" },
+                    { dialogue: "第三個字是「Da」，也是加兩點的濁音。", target: "ダ", romanji: "Da", options: ["タ", "ダ", "デ", "ド"], hint: "找右上角藍色的海馬(墨海馬)，把那格的字加上兩點。" },
+                    { dialogue: "最後一個是把聲音拉長的「長音符號」！", target: "ー", romanji: "(長音)", options: ["一", "ー", "ニ", "ン"], hint: "找最像一條橫線的那個符號就對了。" }
+                ],
+                bonusDialogue: "神獸解碼完成！你連閃電鳥的名字都看得懂了，真的是解碼專家！"
             }
         ];
 
-        // 屬性模式的關卡 (平假名特訓)
+        // 屬性模式擴充：加入冰、蟲、毒
         const typeLevels = [
             {
                 pokemonName: "小火龍", pokemonId: 4, typeName: "火屬性", typeColor: "bg-red-500",
                 steps: [
-                    { dialogue: "屬性特訓開始！我們要找出小火龍的屬性：火(Ho-No-O)。注意喔，屬性要看實體表上大大的『平假名』！先找 Ho。", target: "ほ", romanji: "Ho", options: ["ほ", "は", "ま", "よ"], hint: "看實體表最後一排中間的『多邊獸』，牠格子裡大大的黑字就是 Ho。" },
-                    { dialogue: "第二個字是 No。這個字長得有點像一個圓圈被打了一個結。", target: "の", romanji: "No", options: ["め", "ぬ", "の", "あ"], hint: "找找看最後一排，黃黑相間的『土龍弟弟』，牠身上大大的字就是 No。" },
-                    { dialogue: "最後一個字是 O，火屬性的日文會連續發出兩次 O 的聲音喔。", target: "お", romanji: "O", options: ["あ", "お", "む", "を"], hint: "在實體表最右下角，生氣的『火爆猴』，這次要看大大的黑字喔！" }
+                    { dialogue: "屬性特訓開始！找出火(Ho-No-O)。屬性要看實體表上大大的『平假名』！先找 Ho。", target: "ほ", romanji: "Ho", options: ["ほ", "は", "ま", "よ"], hint: "看實體表最後一排中間的多邊獸，大大的黑字就是 Ho。" },
+                    { dialogue: "第二個字是 No。", target: "の", romanji: "No", options: ["め", "ぬ", "の", "あ"], hint: "找最後一排的土龍弟弟，牠身上大大的字就是 No。" },
+                    { dialogue: "最後一個字是 O。", target: "お", romanji: "O", options: ["あ", "お", "む", "を"], hint: "最右下角的火爆猴，看大大的黑字喔！" }
                 ],
-                bonusDialogue: "解鎖火屬性「ほのお」！這個單字在日常生活中就是火焰的意思喔，你學會了一個真正的日文單字了！"
+                bonusDialogue: "解鎖火屬性「ほのお」！在日文裡就是火焰的意思。"
             },
             {
-                pokemonName: "傑尼龜", pokemonId: 7, typeName: "水屬性", typeColor: "bg-blue-500",
+                pokemonName: "急凍鳥", pokemonId: 144, typeName: "冰屬性", typeColor: "bg-cyan-400 text-slate-800",
                 steps: [
-                    { dialogue: "傑尼龜是什麼屬性呢？水屬性(Mi-Zu)！第一個字是 Mi。", target: "み", romanji: "Mi", options: ["み", "む", "め", "も"], hint: "實體表最上面那一排，有一隻超夢，看牠格子裡大大的黑字！" },
-                    { dialogue: "第二個字是 Zu。這是一個加上兩點的濁音喔！找找看『Su』加上兩點。", target: "ず", romanji: "Zu", options: ["す", "ず", "づ", "つ"], hint: "找右邊數來第四行，神獸『水君』。把牠格子裡的大字加上兩點就對了！" }
+                    { dialogue: "急凍鳥是冰屬性(Ko-O-Ri)！這個單字超實用。先找 Ko。", target: "こ", romanji: "Ko", options: ["こ", "い", "に", "た"], hint: "找最下面那一排，黃色的可達鴨，看牠格子裡的大字。" },
+                    { dialogue: "第二個字是 O，火屬性那關才剛找過喔！", target: "お", romanji: "O", options: ["あ", "お", "む", "を"], hint: "最右下角火爆猴格子裡的大字。" },
+                    { dialogue: "最後一個字是 Ri，長得像兩根棍子。", target: "り", romanji: "Ri", options: ["り", "い", "に", "ち"], hint: "找左邊數來第二行的噴火龍，看大大的黑字。" }
                 ],
-                bonusDialogue: "解鎖水屬性「みず」！去日本餐廳如果想喝水，只要指著杯子說 Mi-Zu，老闆就會聽懂囉！"
+                bonusDialogue: "解鎖冰屬性「こおり」！去日本吃刨冰或是點飲料要加冰塊，就是這個字喔！"
             },
             {
-                pokemonName: "妙蛙種子", pokemonId: 1, typeName: "草屬性", typeColor: "bg-green-500",
+                pokemonName: "綠毛蟲", pokemonId: 10, typeName: "蟲屬性", typeColor: "bg-lime-500 text-slate-800",
                 steps: [
-                    { dialogue: "妙蛙種子是草屬性(Ku-Sa)！第一個字是 Ku，長得像一個小於符號 <。", target: "く", romanji: "Ku", options: ["く", "へ", "て", "し"], hint: "找右邊數來第二行，頭上有一朵大花的『臭臭花』，看裡面的大字。" },
-                    { dialogue: "草的第二個字是 Sa。", target: "さ", romanji: "Sa", options: ["き", "ち", "さ", "な"], hint: "右上角那一區，黃色的『閃電鳥』，格子裡的大黑字就是 Sa 喔。" }
+                    { dialogue: "綠毛蟲是蟲屬性(Mu-Shi)！只有兩個字，很簡單。先找 Mu。", target: "む", romanji: "Mu", options: ["す", "む", "め", "も"], hint: "找第三排，有一隻紫色頭髮的夢妖，看牠格子裡的大字。" },
+                    { dialogue: "第二個字是 Shi，長得像一個大大的鉤子。", target: "し", romanji: "Shi", options: ["し", "つ", "て", "ひ"], hint: "找第二排右邊數來第三個，白色的基拉祈，看大大的黑字。" }
                 ],
-                bonusDialogue: "解鎖草屬性「くさ」！公園裡的草皮、路邊的雜草，日文全部都是這個字！"
+                bonusDialogue: "解鎖蟲屬性「むし」！夏天去公園抓獨角仙，就是去抓 Mu-Shi 喔！"
             },
             {
-                pokemonName: "皮卡丘", pokemonId: 25, typeName: "電屬性", typeColor: "bg-yellow-400 text-slate-800",
+                pokemonName: "阿柏蛇", pokemonId: 23, typeName: "毒屬性", typeColor: "bg-purple-600",
                 steps: [
-                    { dialogue: "皮卡丘的屬性是電(De-N-Ki)！第一個字是 De，這是 Te 加上兩點的濁音喔。", target: "で", romanji: "De", options: ["て", "で", "と", "ど"], hint: "實體表倒數第二排右邊，咖啡色的『地鼠』，把那個大字加上兩點。" },
-                    { dialogue: "第二個是閉著嘴巴的鼻音 N！這個字我們練過很多次了。", target: "ん", romanji: "N", options: ["ん", "そ", "つ", "し"], hint: "沒錯，就是最左上角卡比獸那個格子裡的大字！" },
-                    { dialogue: "最後一個字是 Ki。", target: "き", romanji: "Ki", options: ["さ", "き", "い", "こ"], hint: "找右邊數來第三行，有九條尾巴的『九尾』，牠格子裡的大黑字就是 Ki。" }
+                    { dialogue: "阿柏蛇是毒屬性(Do-Ku)！第一個字是 Do，這是 To 加上兩點的濁音喔。", target: "ど", romanji: "Do", options: ["と", "ど", "で", "て"], hint: "找實體表下半部中間的波克比，把那格的大字加上兩點。" },
+                    { dialogue: "第二個字是 Ku，長得像小於符號 <。", target: "く", romanji: "Ku", options: ["く", "へ", "て", "し"], hint: "找右邊數來第二行，頭上有一朵大花的臭臭花，看裡面的大字。" }
                 ],
-                bonusDialogue: "解鎖電氣屬性「でんき」！家裡的電燈、電視，只要用到電的，前面常常會加上這個字喔！"
+                bonusDialogue: "解鎖毒屬性「どく」！平常看到這個字要小心喔！"
+            },
+            {
+                pokemonName: "比雕", pokemonId: 18, typeName: "飛行屬性", typeColor: "bg-sky-300 text-slate-800",
+                steps: [
+                    { dialogue: "比雕(大比鳥)是飛行屬性(Hi-Ko-U)！先找第一個字 Hi。", target: "ひ", romanji: "Hi", options: ["ひ", "い", "に", "き"], hint: "找第二排中間的小火龍，看大大的黑字！" },
+                    { dialogue: "第二個字是 Ko，冰屬性那關找過囉。", target: "こ", romanji: "Ko", options: ["こ", "い", "に", "た"], hint: "最下面一排黃色的可達鴨。" },
+                    { dialogue: "最後一個字是 U，皮卡丘那關也有用到。", target: "う", romanji: "U", options: ["う", "つ", "て", "ろ"], hint: "找右邊數來第三排最上面的風速狗，看大字！" }
+                ],
+                bonusDialogue: "解鎖飛行屬性「ひこう」！你現在認識超多屬性的日文了，太強啦！"
             }
         ];
 
@@ -191,6 +227,12 @@
 
         function speak(text) {
             if ('speechSynthesis' in window) {
+                if (text === 'ー') {
+                    const utterance = new SpeechSynthesisUtterance('長音');
+                    utterance.lang = 'zh-TW';
+                    window.speechSynthesis.speak(utterance);
+                    return;
+                }
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'ja-JP';
                 utterance.rate = 0.8; 
@@ -225,7 +267,7 @@
             levelIndicator.classList.add('hidden');
             homeBtn.classList.add('hidden');
             hintContainer.classList.add('hidden');
-            dialogueText.textContent = "歡迎回到訓練中心！今天你想進行哪一種特訓呢？";
+            dialogueText.textContent = "歡迎回到訓練中心！題庫已經更新，今天你想挑戰哪一種特訓呢？";
         }
 
         function selectMode(mode) {
@@ -256,7 +298,6 @@
             const currentLevel = currentLevels[currentLevelIndex];
             pokemonImage.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${currentLevel.pokemonId}.png`; 
             
-            // 如果是屬性模式，一開始不遮蔽寶可夢，因為我們是要猜它的屬性
             if (currentMode === 'type') {
                 pokemonImage.classList.remove('brightness-0', 'opacity-50');
                 pokemonImage.classList.add('w-48', 'h-48', 'brightness-100', 'opacity-100');
@@ -286,7 +327,6 @@
                 
                 shuffledOptions.forEach(option => {
                     const btn = document.createElement('button');
-                    // 平假名看起來比較圓潤，片假名比較方正，字型會自動處理
                     btn.className = 'japanese-font text-5xl md:text-6xl text-slate-700 bg-white border-4 border-slate-200 rounded-2xl p-6 flex items-center justify-center card-pop hover:border-blue-400 hover:text-blue-600 transition-colors aspect-square';
                     btn.textContent = option;
                     
@@ -350,7 +390,6 @@
                 pokemonImage.classList.remove('brightness-0', 'opacity-50', 'w-32', 'h-32');
                 pokemonImage.classList.add('w-48', 'h-48', 'brightness-100', 'opacity-100', 'correct-anim');
             } else if (currentMode === 'type') {
-                // 屬性模式過關時，顯示屬性徽章
                 typeBadge.textContent = currentLevel.typeName;
                 typeBadge.className = `text-2xl md:text-3xl font-bold px-6 py-2 rounded-full mb-4 correct-anim shadow-md ${currentLevel.typeColor}`;
                 typeBadge.classList.remove('hidden');
@@ -383,6 +422,5 @@
     </script>
 </body>
 </html>
-
 
 
